@@ -7,17 +7,35 @@ import Results from "./results/results";
 import "./App.css";
 
 class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      forecasts: [],
+      location: "",
+    };
+  }
+
   handleLocation = (event, location) => {
     event.preventDefault();
-    console.log(location);
+
+    fetch(`https://mcr-codes-weather.herokuapp.com/forecast?city=${location}`)
+      .then((response) => response.json())
+      .then((data) =>
+        this.setState({
+          forecasts: data.forecasts,
+          location: data.location.city,
+        })
+      );
   };
 
   render() {
+    const { forecasts } = this.state;
+
     return (
       <div className="App">
         <NavBar />
         <Homepage submitLocation={this.handleLocation} />
-        <Results />
+        <Results forecasts={forecasts} />
       </div>
     );
   }

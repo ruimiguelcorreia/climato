@@ -11,7 +11,7 @@ const Homepage = (props) => {
     <div>
       <div>This will be the logo.</div>
       <form>
-        <label for="location">Location:</label>
+        <label htmlFor="location">Location:</label>
         <input
           type="text"
           placeholder="e.g. Manchester"
