@@ -1,5 +1,4 @@
-import React from "react";
-import { Switch, Route } from "react-router-dom";
+import React, { Component } from "react";
 
 import NavBar from "./navBar/navBar";
 import Homepage from "./homepage/homepage";
@@ -7,16 +6,21 @@ import Results from "./results/results";
 
 import "./App.css";
 
-const App = () => {
-  return (
-    <div className="App">
-      <NavBar />
-      <Switch>
-        <Route exact path="/" component={Homepage} />
-        <Route exact path="/results" component={Results} />
-      </Switch>
-    </div>
-  );
-};
+class App extends Component {
+  handleLocation = (event, location) => {
+    event.preventDefault();
+    console.log(location);
+  };
+
+  render() {
+    return (
+      <div className="App">
+        <NavBar />
+        <Homepage submitLocation={this.handleLocation} />
+        <Results />
+      </div>
+    );
+  }
+}
 
 export default App;
