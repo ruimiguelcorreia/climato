@@ -11,6 +11,7 @@ class App extends Component {
     super();
     this.state = {
       forecasts: [],
+      gotData: null,
       location: "",
     };
   }
@@ -23,19 +24,24 @@ class App extends Component {
       .then((data) =>
         this.setState({
           forecasts: data.forecasts,
+          gotData: true,
           location: data.location.city,
         })
       );
   };
 
   render() {
-    const { forecasts } = this.state;
+    const { forecasts, gotData } = this.state;
 
     return (
       <div className="App">
         <NavBar />
         <Homepage submitLocation={this.handleLocation} />
-        <Results forecasts={forecasts} />
+        {gotData
+          ? forecasts.map((forecast) => (
+              <Results key={forecast.date} {...forecast} />
+            ))
+          : "What's your location?"}
       </div>
     );
   }
